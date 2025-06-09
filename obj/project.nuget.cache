@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "wDpjjdiKo3E=",
+  "success": true,
+  "projectFilePath": "/Users/divyanshu/Codes/TaskMasterApi/TaskMasterApi.csproj",
+  "expectedPackageFiles": [
+    "/Users/divyanshu/.nuget/packages/microsoft.aspnetcore.openapi/9.0.5/microsoft.aspnetcore.openapi.9.0.5.nupkg.sha512",
+    "/Users/divyanshu/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
