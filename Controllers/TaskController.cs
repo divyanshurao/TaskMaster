@@ -26,7 +26,8 @@ namespace TaskMasterApi.Controllers
         {
             task.Id = nextId++;
             tasks.Add(task);
-            return CreatedAtAction(nameof(GetById), new { id = task.Id });
+            // return Ok(task); 
+            return CreatedAtAction(nameof(GetById), new { id = task.Id }, task);
         }
 
         [HttpPut("{id}")]
