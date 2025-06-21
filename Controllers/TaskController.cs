@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using TaskMasterApi.Data;
 using TaskMasterApi.Models;
 
 namespace TaskMasterApi.Controllers
@@ -8,6 +9,10 @@ namespace TaskMasterApi.Controllers
     [Route("api/[controller]")]
     public class TaskController : ControllerBase
     {
+        private readonly TaskDbContext _context;
+        public TaskController(TaskDbContext context) {
+            _context = context;
+        }
         private static List<TaskItem> tasks = new List<TaskItem>();
         private static int nextId = 1;
 
