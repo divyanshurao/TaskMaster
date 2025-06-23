@@ -1,5 +1,7 @@
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskMasterApi.Data;
 using TaskMasterApi.Models;
 
@@ -17,28 +19,31 @@ namespace TaskMasterApi.Controllers
         private static int nextId = 1;
 
         [HttpGet]
-        public ActionResult<IEnumerable<TaskItem>> GetAll() => Ok(tasks);
+        public async Task<ActionResult<IEnumerable<TaskItem>>> GetAll()
+        {
+            return Ok(await _context.Tasks.ToListAsync());
+        }
 
         [HttpGet("{id}")]
-        public ActionResult<TaskItem> GetById(int id)
+        public async Task<ActionResult<TaskItem>> GetById(int id)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = await _context.Tasks.FindAsync(id);
             return task == null ? NotFound() : Ok(task);
         }
 
         [HttpPost]
-        public ActionResult<TaskItem> Create(TaskItem task)
+        public async Task<ActionResult<TaskItem>> Create(TaskItem task)
         {
-            task.Id = nextId++;
-            tasks.Add(task);
+            _context.Tasks.Add(task);
+            await _context.SaveChangesAsync();
             // return Ok(task); 
             return CreatedAtAction(nameof(GetById), new { id = task.Id }, task);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, TaskItem updatedtask)
+        public async Task<ActionResult> Update(int id, TaskItem updatedtask)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = await _context.Tasks.FindAsync(id);
             if (task == null) return NotFound();
             task.Description = updatedtask.Description;
             task.IsCompleted = updatedtask.IsCompleted;
